@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "telegram"
-version = "0.1.0"
+name = "pytele"
+version = "1.0.0"
 description = ""
 authors = ["Jordan Raychev <jpraychev@gmail.com>"]
 readme = "README.md"
