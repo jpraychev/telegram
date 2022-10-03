@@ -23,6 +23,7 @@ class Bot:
         self.__commands = {}
 
     def __make_request(self, request_method, url, **kwargs):
+        """ Wrapper for Python requests method """
         return request(request_method, url, timeout=10, **kwargs)
 
     def __ack_message(self, msg) -> bool:
@@ -49,6 +50,14 @@ class Bot:
         return True
 
     def __cmd_registered(self, user_cmd:str) -> bool:
+        """Checks if commands are registered
+
+        Args:
+            user_cmd (str): User command with the following syntax: /test
+
+        Returns:
+            bool: True if command is registered. False otherwise.
+        """
         if self.__commands.get(user_cmd) is None:
             print(f'The supplied command "{user_cmd}" was not registered. '
                    'Message will be acknoledged but action not executed!')
@@ -56,9 +65,19 @@ class Bot:
         return True
 
     def __notify_sender(self, chat_id, msg):
+        """ Wrapper function of send_msg (just for clarity)
+        """
         return self.send_msg(chat_id, msg)
 
     def __execute_command(self, msg:dict[str, Any]) -> bool:
+        """Executes a remote command provided via Telegram chat with the bot
+
+        Args:
+            msg (dict[str, Any]): Parsed telegram message from `__get_message(...)`
+
+        Returns:
+            bool: True if the command was executed successfully. False otherwise.
+        """
         cmd = msg['message']['text']
         chat_id = msg['message']['chat']['id']
 
@@ -68,8 +87,7 @@ class Bot:
             # Subprocess call for the particular command
             self.__notify_sender(chat_id, f'{cmd} executed successfully. Output is down below:')
             return True
-        self.__notify_sender(chat_id, f'{cmd} was not executed because it is not registered. '
-                             'Please register')
+        self.__notify_sender(chat_id, f'{cmd} was not executed because it is not registered. Please register.')
         return False
 
     def __get_message(self) -> dict:
