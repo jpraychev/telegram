@@ -1,3 +1,4 @@
 dist/
-telegram/main.py
 telegram/__pycache__
+1.json
+main.py

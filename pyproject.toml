@@ -8,6 +8,7 @@ packages = [{include = "telegram"}]
 [tool.poetry.dependencies]
 python = "^3.7"
 requests = "^2.28.1"
+PyYAML = "^6.0"
 
 
 [build-system]
