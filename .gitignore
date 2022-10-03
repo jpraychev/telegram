@@ -1,5 +1,4 @@
 dist/
 telegram/__pycache__
-1.json
+tests/
 main.py
-example_commands.yaml
