@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytele"
-version = "0.0.1"
+version = "0.1.0"
 description = ""
 authors = ["Jordan Raychev <jpraychev@gmail.com>"]
 readme = "README.md"
