@@ -5,6 +5,7 @@ import time
 from typing import Any
 from requests import request
 from .utils import command_parser
+import subprocess as ps
 
 class Bot:
     """ Simplest telegram bot """
@@ -83,9 +84,9 @@ class Bot:
 
         if self.__cmd_registered(cmd):
             command = self.__commands.get(cmd)
-            # TO DO
-            # Subprocess call for the particular command
-            self.__notify_sender(chat_id, f'{cmd} executed successfully. Output is down below:')
+            output = ps.run(command, capture_output=True, check=True, text=True)
+            self.__notify_sender(chat_id, f'{cmd} executed successfully. Output is down below:\n\n'
+            f'{output.stdout}')
             return True
         self.__notify_sender(chat_id, f'{cmd} was not executed because it is not registered. Please register.')
         return False
@@ -151,7 +152,7 @@ class Bot:
             raise Exception(f'An error occured with message notification - {res.status_code}')
         return True
 
-    def listen(self, interval:int) -> None:
+    def listen(self, interval:int=3) -> None:
         """Main loop that polls messages for a particular bot as defined by the
         get_updates_url.
 
